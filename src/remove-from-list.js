@@ -34,7 +34,7 @@ function removeKFromList(l, k) {
     let current = filtered
 
     do {
-      if (current.next.value === k) {
+      if (current.next.value == k) {
         current.next = current.next.next
       }else{
         current = current.next || null
