@@ -47,6 +47,10 @@ class BinarySearchTree {
 
   has(data) {
     let current = this.rootNode;
+    if (current == null){
+      return false
+    }
+
     while (data != current.data) {
       if (data < current.data  && current.left === null) {
         return false
