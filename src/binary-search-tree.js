@@ -11,8 +11,8 @@ class BinarySearchTree {
     this.rootNode = null
   }
 
-  addNode(node, rootNode) {
-    if (rootNode === null) {
+  addNode(node, rootNode = this.rootNode) {
+    if (rootNode == null) {
       this.rootNode = node
       return;
     }
@@ -84,69 +84,68 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    if(this.rootNode == null){
+    if (this.rootNode == null) {
       return
     }
 
-    if (data == this.rootNode.data){
+    if (data == this.rootNode.data) {
       let a = this.rootNode
       this.rootNode = null
-      if(a.left != null){
+      if (a.left != null) {
         this.addNode(a.left)
       }
-      if(a.right != null){
+      if (a.right != null) {
         this.addNode(a.right)
       }
-    }
+      return
+    } else {
 
+      let current = this.rootNode;
+      let parent = null;
 
-    let current = this.rootNode;
-    let parent = null;
-
-    while (data != current.data) {
-      if (current == null){
-        return
+      while (data != current.data) {
+        if (data < current.data) {
+          if (current.left != null) {
+            parent = current
+            current = current.left
+          } else {
+            return
+          }
+        }
+        if (data > current.data) {
+          if (current.right != null) {
+            parent = current
+            current = current.right
+          } else {
+            return
+          }
+        }
       }
 
-      if (current.left == null && current.right == null){
-        return
+      if (parent != null && current == parent.left) {
+        parent.left = null
+        if (current.left != null) {
+          this.addNode(current.left, parent)
+        }
+        if (current.right != null) {
+          this.addNode(current.right, parent)
+        }
+        if (current.left == null && current.right == null) {
+          parent.left == null
+        }
       }
 
-      if (data < current.data) {
-        parent = current
-        current = current.left
-      }
-      if (data > current.data) {
-        parent = current
-        current = current.right
-      }
-
-
-
-    }
-
-
-    if ( parent != null && current == parent.left) {
-      if (current.left != null) {
-        this.addNode(current.left, parent)
-      }
-      if (current.right != null) {
-        this.addNode(current.right, parent)
-      }
-      if(current.left == null && current.right == null){
-        parent.left == null
-      }
-    }
-
-    if ( parent != null && current == parent.right) {
-      if (current.left != null) {
-        this.addNode(current.left, parent)
-      }
-      if (current.right != null) {
-        this.addNode(current.right, parent)
-      }
-      if(current.left == null && current.right == null){
-        parent.right == null
+      if (parent != null && current == parent.right) {
+        parent.right = null
+        if (current.left != null) {
+          this.addNode(current.left, parent)
+        }
+        if (current.right != null) {
+          this.addNode(current.right, parent)
+        }
+        if (current.left == null && current.right == null) {
+          parent.right == null
+        }
       }
     }
   }
